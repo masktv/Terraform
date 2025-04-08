@@ -249,21 +249,19 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
 }
 
 # scaling policy 
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "scale-up"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  autoscaling_group_name = aws_autoscaling_group.deployment-scaling_group.name
+resource "aws_autoscaling_policy" "target_tracking" {
+    name                   = "target-traking-policy"
+    scaling_adjustment     = 1
+    adjustment_type        = "ChangeInCapacity"
+    autoscaling_group_name = aws_autoscaling_group.deployment-scaling_group.name
+    policy_type            = "TargetTrackingScaling"
+    target_tracking_configuration {
+        predefined_metric_specification {
+          predefined_metric_type = "ASGAverageCPUUtilization"
+        }
+        target_value = 60.0  # Target CPU utilization percentage
+    }
 }
-
-# Scaling Policy (Scale Down)
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "scale-down"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  autoscaling_group_name = aws_autoscaling_group.deployment_scaling_group.name
-}
-
 ................................................................................................
 
 # creating Database server 
