@@ -262,7 +262,6 @@ resource "aws_autoscaling_policy" "target_tracking" {
         target_value = 60.0  # Target CPU utilization percentage
     }
 }
-................................................................................................
 
 # creating Database server 
 
@@ -286,8 +285,6 @@ resource "aws_instance" "database_instance" {
     }
 }
 
-......................................................................................
-
 # Creating EFS 
 resource "aws_efs_file_system" "app-file" {
     creation_token = "app-file"
@@ -297,4 +294,3 @@ resource "aws_efs_file_system" "app-file" {
     }
 }
 
-.......................................................................................
