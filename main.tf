@@ -139,7 +139,7 @@ resource "aws_route_table_association" "to_private_route_b" {
     route_table_id = aws_route_table.custom_nat_route_table.id
 }
 resource "aws_route_table_association" "to_private_route_c" {
-    subnet_id = aws_subnet.private-subnet-1.id
+    subnet_id = aws_subnet.private_subnet-1.id
     route_table_id = aws_route_table.custom_nat_route_table.id
 }
 
@@ -206,7 +206,7 @@ resource"aws_lb_target_group" "target_group" {
 }
 
 # alb listener
-resource "aws_lb_listner" "http_listner" {
+resource "aws_lb_listener" "http_listner" {
     load_balancer_arn = aws_lb.deployment_loadbalancer.arn
     port = 80
     protocol  = "HTTP"
@@ -215,7 +215,7 @@ resource "aws_lb_listner" "http_listner" {
         target_group_arn = aws_lb_target_group.target_group.arn
     }
 }
-resource aws_lb_listner" "https_listner" {
+resource aws_lb_listener" "https_listner" {
     load_balancer_arn = aws_lb.deployment_loadbalancer.arn
     port = 443
     protocol  = "HTTPS"
@@ -253,7 +253,7 @@ resource "aws_autoscaling_policy" "target_tracking" {
     name                   = "target-traking-policy"
     scaling_adjustment     = 1
     adjustment_type        = "ChangeInCapacity"
-    autoscaling_group_name = aws_autoscaling_group.deployment-scaling_group.name
+    autoscaling_group_name = aws_autoscaling_group.deployment_scaling_group.name
     policy_type            = "TargetTrackingScaling"
     target_tracking_configuration {
         predefined_metric_specification {
