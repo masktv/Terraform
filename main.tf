@@ -400,3 +400,4 @@ origin {
       restriction_type = "none"
     }
   }
+https://medium.com/@prabhupj/adding-aws-cloud-front-in-front-of-load-balancer-and-add-a-records-to-route53-using-terraform-1fa9b3823416
