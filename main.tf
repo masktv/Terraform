@@ -325,6 +325,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     compress               = true
     path_pattern           = "*"
     viewer_protocol_policy = "allow-all"
+    target_origin_id       = aws_lb.deployment_loadbalancer.id
   }
 
   origin {
