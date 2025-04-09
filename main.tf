@@ -332,9 +332,9 @@ resource "aws_cloudfront_distribution" "cdn" {
         origin_protocol_policy = "http-https"
     }
     price_class = "PriceClass_All"
-    viewer_certificate = {
-        acm_certificate_arn = "arn:aws:acm:your-region:your-account-id:certificate/your-certificate-id"
-        ssl_support_method = "sni-only"
-        minimum_protocol_version = "TLSv1.2_2019"
-    }
+    #viewer_certificate = {
+        #acm_certificate_arn = "arn:aws:acm:your-region:your-account-id:certificate/your-certificate-id"
+        #ssl_support_method = "sni-only"
+        #minimum_protocol_version = "TLSv1.2_2019"
+    #}
 }
