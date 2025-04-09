@@ -349,3 +349,54 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 }
+
+
+....................................................
+origin {
+    domain_name = aws_lb.deployment_loadbalancer.dns_name
+    origin_id   = "myLoadBalancerOrigin"
+
+    custom_origin_config {
+      http_port               = 80   # Adjust if your LB listens on a different HTTP port
+      https_port              = 443  # Adjust if your LB listens on a different HTTPS port
+      origin_protocol_policy  = "http-https" # Correct placement
+      origin_ssl_protocols    = ["TLSv1.2", "TLSv1.1", "TLSv1"] # Specify supported protocols
+      origin_read_timeout     = 30
+      origin_keepalive_timeout = 5
+    }
+  }
+
+  default_cache_behavior {
+    target_origin_id       = "myLoadBalancerOrigin"
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD", "OPTIONS"]
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+
+    min_ttl     = 0
+    default_ttl = 3600
+    max_ttl     = 86400
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate = false
+    acm_certificate_arn            = var.certificate_arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2019"
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = true
+  default_root_object = "index.html" # Adjust as needed
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
