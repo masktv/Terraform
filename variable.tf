@@ -81,7 +81,6 @@ variable "aliases" {
     default = [
         "web.masktvott.com",
         "admin.masktvott.com",
-        "spain.masktvott.com",
         "masktvott.com"
     ]
 }
