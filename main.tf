@@ -316,12 +316,16 @@ resource "aws_efs_file_system" "app_file" {
 # cretaing CDN Distribution
 resource "aws_cloudfront_distribution" "cdn" {
   enabled = true
+  is_ipv6_enabled = true
+  aliases = var.aliases
+  price_class = "PriceClass_All"
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD"]
+    allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods         = ["GET", "HEAD"]
     cache_policy_id        = "83da9c7e-98b4-4e11-a168-04f0df8e2c65"
     origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3"
+    viewer_protocol_policy   = "redirect-to-https"
     compress               = true
     path_pattern           = "*"
     viewer_protocol_policy = "allow-all"
@@ -331,10 +335,13 @@ resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name           = aws_lb.deployment_loadbalancer.dns_name
     origin_id             = loadbalancer
-    origin_protocol_policy = "http-https"
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "match-viewer"
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
   }
-
-  price_class = "PriceClass_All"
 
    viewer_certificate {
      acm_certificate_arn = var.certificate_arn # Use the same certificate as your ALB if needed
@@ -352,52 +359,5 @@ resource "aws_cloudfront_distribution" "cdn" {
 
 
 ....................................................
-origin {
-    domain_name = aws_lb.deployment_loadbalancer.dns_name
-    origin_id   = "myLoadBalancerOrigin"
 
-    custom_origin_config {
-      http_port               = 80   # Adjust if your LB listens on a different HTTP port
-      https_port              = 443  # Adjust if your LB listens on a different HTTPS port
-      origin_protocol_policy  = "http-https" # Correct placement
-      origin_ssl_protocols    = ["TLSv1.2", "TLSv1.1", "TLSv1"] # Specify supported protocols
-      origin_read_timeout     = 30
-      origin_keepalive_timeout = 5
-    }
-  }
-
-  default_cache_behavior {
-    target_origin_id       = "myLoadBalancerOrigin"
-    viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD", "OPTIONS"]
-
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
-  }
-
-  viewer_certificate {
-    cloudfront_default_certificate = false
-    acm_certificate_arn            = var.certificate_arn
-    ssl_support_method             = "sni-only"
-    minimum_protocol_version       = "TLSv1.2_2019"
-  }
-
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = "index.html" # Adjust as needed
-
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
 https://medium.com/@prabhupj/adding-aws-cloud-front-in-front-of-load-balancer-and-add-a-records-to-route53-using-terraform-1fa9b3823416
