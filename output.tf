@@ -74,7 +74,7 @@ output "database_instance_id" {
 }
 
 output "efs_file_system_id" {
-  value = aws_efs_file_system.app-file.id
+  value = aws_efs_file_system.app_file.id
   description = "ID of the EFS file system"
 }
 
