@@ -315,7 +315,7 @@ resource "aws_efs_file_system" "app-file" {
 
 # cretaing CDN Distribution
 resource "aws_cloudfront_distribution" "cdn" {
-    aliases = var.aliases
+    #aliases = var.aliases
     enabled = true 
     default_cache_behavior = {
         allowed_methods = ["GET", "HEAD"]
