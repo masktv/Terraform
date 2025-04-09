@@ -335,11 +335,11 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   price_class = "PriceClass_All"
 
-  # viewer_certificate {
-  #   acm_certificate_arn = var.certificate_arn # Use the same certificate as your ALB if needed
-  #   ssl_support_method  = "sni-only"
-  #   minimum_protocol_version = "TLSv1.2_2019"
-  # }
+   viewer_certificate {
+     acm_certificate_arn = var.certificate_arn # Use the same certificate as your ALB if needed
+     ssl_support_method  = "sni-only"
+     minimum_protocol_version = "TLSv1.2_2019"
+   }
 
   restrictions {
     geo_restriction {
