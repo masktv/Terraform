@@ -330,7 +330,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   origin {
     domain_name           = aws_lb.deployment_loadbalancer.dns_name
-    origin_id             = aws_lb.deployment_loadbalancer.id
+    origin_id             = loadbalancer
     origin_protocol_policy = "http-https"
   }
 
