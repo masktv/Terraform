@@ -1,5 +1,5 @@
 provider "aws" {
-    project = "chine"
+    project = "china"
     region = var.region
 }
 
@@ -17,7 +17,7 @@ resource "aws_vpc" "custom_vpc" {
 resource "aws_subnet" "public_subnet_1" {
     cidr_block = var.pub_sub_cidr_a
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
+    availability_zone = "ap-southeast-1a"
     map_public_ip_on_launch = true
     tag = {
         Name = "az-1"
@@ -26,7 +26,7 @@ resource "aws_subnet" "public_subnet_1" {
 resource "aws_subnet" "public_subnet_2" {
     cidr_block = var.pub_sub_cidr_b
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
+    availability_zone = "ap-southeast-1b"
     map_public_ip_on_launch = true
     tag = {
         Name = "az-2"
@@ -35,7 +35,7 @@ resource "aws_subnet" "public_subnet_2" {
 resource "aws_subnet" "public_subnet_3" {
     cidr_block = var.pub_sub_cidr_c
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
+    availability_zone = "ap-southeast-1c"
     map_public_ip_on_launch = true
     tag = {
         Name = "az-3"
@@ -46,8 +46,8 @@ resource "aws_subnet" "public_subnet_3" {
 resource "aws_subnet" "private_subnet_1" {
     cidr_block = var.priv_sub_cidr_a
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
-    map_public_ip_on_launch = true
+    availability_zone = "ap-southeast-1a"
+    map_public_ip_on_launch = false
     tag = {
         Name = "az-1"
     }
@@ -55,8 +55,8 @@ resource "aws_subnet" "private_subnet_1" {
 resource "aws_subnet" "private_subnet_2" {
     cidr_block = var.priv_sub_cidr_b
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
-    map_public_ip_on_launch = true
+    availability_zone = "ap-southeast-1b"
+    map_public_ip_on_launch = false
     tag = {
         Name = "az-2"
     }
@@ -64,8 +64,8 @@ resource "aws_subnet" "private_subnet_2" {
 resource "aws_subnet" "private_subnet_3" {
     cidr_block = var.priv_sub_cidr_c
     vpc_id = aws_vpc.custom_vpc.id
-    availability_zone = ".."
-    map_public_ip_on_launch = true
+    availability_zone = "ap-southeast-1c"
+    map_public_ip_on_launch = false
     tag = {
         Name = "az-3"
     }
@@ -124,10 +124,10 @@ resource "aws_route_table" "custom_nat_route_table" {
 
 # creating route for nat gateway
 resource "aws_route" "nat_routs"{
-    route_table_id = aws_route_table.custom_igw_route_table.id
-    destination_cidr_block = "0.0.0.0/0"
+    route_table_id = aws_route_table.custom_nat_route_table.id
+    destination_cidr_block = var.pub_sub_cidr_a # cidr of public_subnet-1 --> accept network from public_subnet_1 
     nat_gateway_id = aws_nat_gateway.custom_nat.id
-}
+} 
 
 # private subnet assosiation to get network connection prom public subnet
 resource "aws_route_table_association" "to_private_route_a" {
@@ -135,11 +135,11 @@ resource "aws_route_table_association" "to_private_route_a" {
     route_table_id = aws_route_table.custom_nat_route_table.id
 }
 resource "aws_route_table_association" "to_private_route_b" {
-    subnet_id = aws_subnet.private_subnet_1.id
+    subnet_id = aws_subnet.private_subnet_2.id
     route_table_id = aws_route_table.custom_nat_route_table.id
 }
 resource "aws_route_table_association" "to_private_route_c" {
-    subnet_id = aws_subnet.private_subnet-1.id
+    subnet_id = aws_subnet.private_subnet-3.id
     route_table_id = aws_route_table.custom_nat_route_table.id
 }
 
@@ -312,3 +312,29 @@ resource "aws_efs_file_system" "app-file" {
     }
 }
 
+
+# cretaing CDN Distribution
+resource "aws_cloudfront_distribution" "cdn" {
+    aliases = var.aliases
+    enabled = true 
+    default_cache_behavior = {
+        allowed_methods = ["GET", "HEAD"]
+        cached_methods = ["GET", "HEAD"]
+        cache_policy_id = "83da9c7e-98b4-4e11-a168-04f0df8e2c65"
+        origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3"
+        compress = true
+        path_pattern = "*"
+        viewer_protocol_policy = "allow-all"
+    }
+    origin = {
+        domain_name = aws_lb.deployment_loadbalancer.dns_name
+        origin_id = aws_lb.deployment_loadbalancer.id
+        origin_protocol_policy = "http-https"
+    }
+    price_class = "PriceClass_All"
+    viewer_certificate = {
+        acm_certificate_arn = "arn:aws:acm:your-region:your-account-id:certificate/your-certificate-id"
+        ssl_support_method = "sni-only"
+        minimum_protocol_version = "TLSv1.2_2019"
+    }
+}
