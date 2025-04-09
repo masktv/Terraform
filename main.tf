@@ -312,7 +312,7 @@ resource "aws_efs_file_system" "app_file" {
     description = "application file persistency"
   }
 }
-.................................................................
+
 # cretaing CDN Distribution
 resource "aws_cloudfront_distribution" "cdn" {
   enabled = true
