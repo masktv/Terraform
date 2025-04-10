@@ -172,7 +172,7 @@ resource "aws_launch_template" "deployment_template" {
   name_prefix   = "deployment-template-"
   image_id      = var.image_id
   instance_type = var.instance_type
-  key_name      = aws_key_pair.deployment_key_pair.key_name
+  key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
 
   block_device_mappings {
