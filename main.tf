@@ -244,7 +244,7 @@ resource "aws_lb_listener" "https_listener" {
   load_balancer_arn = aws_lb.deployment_loadbalancer.arn
   port              = 443
   protocol          = "HTTPS"
-  certificate_arn   = var.certificate_arn # Ensure this variable is defined
+  certificate_arn   = var.certificate_arn_elb # Ensure this variable is defined
   default_action {
     type = "forward"
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -339,7 +339,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
    viewer_certificate {
-     acm_certificate_arn = var.certificate_arn
+     acm_certificate_arn = var.certificate_arn_cdn
      ssl_support_method  = "sni-only"
      minimum_protocol_version = "TLSv1.2_2019"
    }
