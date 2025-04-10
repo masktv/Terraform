@@ -39,7 +39,7 @@ output "security_group_id" {
 }
 
 output "key_pair_name" {
-  value = aws_key_pair.deployment_key_pair.key_name
+  value = aws_key_pair.spain_deployment_key_pair.key_name
   description = "Name of the key pair"
 }
 
