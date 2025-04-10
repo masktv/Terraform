@@ -162,7 +162,7 @@ resource "aws_security_group" "custom_sg" {
 }
 
 # creating key pair
-resource "aws_key_pair" "spain-deployment_key_pair" {
+resource "aws_key_pair" "spain_deployment_key_pair" {
   key_name = "spain-deployment-key"
 }
 
@@ -288,7 +288,7 @@ resource "aws_autoscaling_policy" "scaling_down" {
 resource "aws_instance" "database_instance" {
   ami           = var.database_ami
   instance_type = var.instance_type_db
-  key_name      = aws_key_pair.deployment_key_pair.key_name
+  key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id] # Consider a dedicated SG
   subnet_id     = aws_subnet.private_subnet_1.id # Choose one private subnet
 
