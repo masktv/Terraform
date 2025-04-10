@@ -294,7 +294,6 @@ resource "aws_instance" "database_instance" {
   subnet_id     = aws_subnet.private_subnet_1.id # Choose one private subnet
 
   root_block_device {
-    device_name           = "/dev/sda1" # Or appropriate device name
     delete_on_termination = false
     volume_size           = var.volume_size_db
   }
