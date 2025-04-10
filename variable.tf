@@ -55,7 +55,12 @@ variable "volume_size" {
   default = 8
 }
 
-variable "certificate_arn" {
+variable "certificate_arn_elb" {
+  type    = string
+  default = "arn:aws:acm:ap-southeast-1:232168115105:certificate/a4f5b0eb-5ef0-42e7-8e28-77976bbbd4a1" # Replace with your actual certificate ARN
+}
+
+variable "certificate_arn_cdn" {
   type    = string
   default = "arn:aws:acm:ap-southeast-1:232168115105:certificate/a4f5b0eb-5ef0-42e7-8e28-77976bbbd4a1" # Replace with your actual certificate ARN
 }
