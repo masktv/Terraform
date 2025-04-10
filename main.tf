@@ -109,7 +109,7 @@ resource "aws_route_table_association" "to_public_route_c" {
 
 # creating elastic-ip for nat gateway
 resource "aws_eip" "nat_eip" {
-  vpc = true
+  domain = "vpc'
 }
 
 # creating NAT Gateway and connecting to public subnet 1 for network connection
