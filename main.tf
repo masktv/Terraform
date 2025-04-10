@@ -164,6 +164,7 @@ resource "aws_security_group" "custom_sg" {
 # creating key pair
 resource "aws_key_pair" "spain_deployment_key_pair" {
   key_name = "spain-deployment-key"
+  public_key = file("~/.ssh/spain-deployment-key.pub")
 }
 
 # creating auto launch template
