@@ -57,7 +57,7 @@ variable "volume_size" {
 
 variable "certificate_arn" {
   type    = string
-  default = "" # Replace with your actual certificate ARN
+  default = "arn:aws:acm:ap-southeast-1:232168115105:certificate/a4f5b0eb-5ef0-42e7-8e28-77976bbbd4a1" # Replace with your actual certificate ARN
 }
 
 variable "database_ami" {
@@ -78,8 +78,8 @@ variable "volume_size_db" {
 variable "aliases" {
   type    = list(string)
   default = [
-    "web.masktvott.com",
-    "admin.masktvott.com",
-    "masktvott.com",
+    "web.makerzmedia.com",
+    "admin.makerzmedia.com",
+    "makerzmedia.com",
   ]
 }
