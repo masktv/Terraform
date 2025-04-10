@@ -326,7 +326,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     cache_policy_id        = "83da9c7e-98b4-4e11-a168-04f0df8e2c65"
     origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3"
     compress               = true
-    path_pattern           = "*"
     viewer_protocol_policy = "allow-all"
     target_origin_id       = aws_lb.deployment_loadbalancer.id
   }
