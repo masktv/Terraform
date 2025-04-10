@@ -74,7 +74,7 @@ resource "aws_subnet" "private_subnet_3" {
 resource "aws_internet_gateway" "custom_igw" {
   vpc_id = aws_vpc.custom_vpc.id
   tags = {
-    Name = "custome-igw"
+    Name = "custom-igw"
   }
 }
 
