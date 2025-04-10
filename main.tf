@@ -162,9 +162,8 @@ resource "aws_security_group" "custom_sg" {
 }
 
 # creating key pair
-resource "aws_key_pair" "deployment_key_pair" {
-  key_name = "deployment-key"
-  # public_key = "your-public-key" # You can import an existing public key here
+resource "aws_key_pair" "spain-deployment_key_pair" {
+  key_name = "spain-deployment-key"
 }
 
 # creating auto launch template
