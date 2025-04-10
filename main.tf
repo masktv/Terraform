@@ -262,8 +262,6 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
 # scale out policy
 resource "aws_autoscaling_policy" "scaling_up" {
   name                   = "scale-up-policy"
-  scaling_adjustment     = 1
-  adjustment_type      = "ChangeInCapacity"
   autoscaling_group_name = aws_autoscaling_group.deployment_scaling_group.name
   policy_type            = "TargetTrackingScaling"
   target_tracking_configuration {
@@ -271,22 +269,6 @@ resource "aws_autoscaling_policy" "scaling_up" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
     target_value       = 60.0 # Target CPU utilization percentage
-    disable_scale_in = false
-  }
-}
-
-# scale down policy
-resource "aws_autoscaling_policy" "scaling_down" {
-  name                   = "scale-down-policy"
-  scaling_adjustment     = -1
-  adjustment_type      = "ChangeInCapacity"
-  autoscaling_group_name = aws_autoscaling_group.deployment_scaling_group.name
-  policy_type            = "TargetTrackingScaling"
-  target_tracking_configuration {
-    predefined_metric_specification {
-      predefined_metric_type = "ASGAverageCPUUtilization"
-    }
-    target_value       = 30.0 # Scale down when CPU drops below 30%
     disable_scale_in = false
   }
 }
