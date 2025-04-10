@@ -62,7 +62,7 @@ variable "certificate_arn_elb" {
 
 variable "certificate_arn_cdn" {
   type    = string
-  default = "arn:aws:acm:ap-southeast-1:232168115105:certificate/a4f5b0eb-5ef0-42e7-8e28-77976bbbd4a1" # Replace with your actual certificate ARN
+  default = "arn:aws:acm:us-east-1:232168115105:certificate/35ed7849-08cb-4586-b933-cf071ee999de" # Replace with your actual certificate ARN
 }
 
 variable "database_ami" {
