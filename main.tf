@@ -107,10 +107,16 @@ resource "aws_route_table_association" "to_public_route_c" {
   route_table_id = aws_route_table.custom_igw_route_table.id
 }
 
+# creating elastic-ip for nat gateway
+resource "aws_eip" "nat_eip" {
+  vpc = true
+}
+
 # creating NAT Gateway and connecting to public subnet 1 for network connection
 resource "aws_nat_gateway" "custom_nat" {
   connectivity_type = "public"
   subnet_id         = aws_subnet.public_subnet_1.id
+  allocation_id     = aws_eip.nat_eip.id
   depends_on        = [aws_internet_gateway.custom_igw] # Ensure IGW is created before NAT Gateway
 }
 
