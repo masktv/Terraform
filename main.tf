@@ -220,6 +220,7 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id   = aws_vpc.custom_vpc.id
   health_check {
     path                = "/"
+    port                = 80
     protocol            = "HTTP"
     matcher             = "200"
     interval            = 30
