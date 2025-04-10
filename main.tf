@@ -235,8 +235,12 @@ resource "aws_lb_listener" "http_listener" {
   port              = 80
   protocol          = "HTTP"
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.target_group.arn
+    type             = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }  
   }
 }
 
@@ -246,7 +250,7 @@ resource "aws_lb_listener" "https_listener" {
   protocol          = "HTTPS"
   certificate_arn   = var.certificate_arn_elb # Ensure this variable is defined
   default_action {
-    type = "forward"
+    type            = "forward"
     target_group_arn = aws_lb_target_group.target_group.arn
   }
 }
