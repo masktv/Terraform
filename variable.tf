@@ -42,7 +42,7 @@ variable "priv_sub_cidr_c" {
 # deployment template image_id
 variable "image_id" {
   type    = string
-  default = "ami-0792b7b4fe0bc5c89"
+  default = "ami-0c116b87c68678dd7"
 }
 
 variable "instance_type" {
