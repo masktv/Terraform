@@ -180,24 +180,13 @@ resource "aws_launch_template" "deployment_template" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
-
-  user_data = base64encode(<<EOF
-#!/bin/bash
-sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl start httpd
-sudo systemctl enable httpd
-echo "<h1>Hello from my Auto Scaled Application!</h1>" > /var/www/html/index.html
-EOF
-  )
-
-  block_device_mappings {
-    device_name = "/dev/sda1" # Or the appropriate device name for your AMI
-    ebs {
-      volume_size           = var.volume_size
-      delete_on_termination = true
-    }
-  }
+  #block_device_mappings {
+   # device_name = "/dev/sda1" # Or the appropriate device name for your AMI
+    #ebs {
+     # volume_size           = var.volume_size
+      #delete_on_termination = true
+    #}
+  #}
 }
 
 # creating application load balancer
