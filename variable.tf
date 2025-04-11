@@ -67,7 +67,7 @@ variable "certificate_arn_cdn" {
 
 variable "database_ami" {
   type    = string
-  default = "ami-065a492fef70f84b1"
+  default = "ami-01938df366ac2d954"
 }
 
 variable "instance_type_db" {
