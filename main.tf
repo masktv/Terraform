@@ -326,88 +326,92 @@ EOF
   }
 }
 
-# efs for application file
+data "aws_region" "current" {}
+
+# Local values for EFS DNS names
+locals {
+  app_efs_dns     = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  db_efs_dns      = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  backup_efs_dns  = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+}
+
+# App EFS
 resource "aws_efs_file_system" "app_file_efs" {
   creation_token = "app-data-efs"
-  encrypted = true
-  tag = {
-    name = app-file
+  encrypted      = true
+
+  tags = {
+    Name = "app-file"
   }
+
   lifecycle {
-    prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
-  }
-  # print dns name of efs
-  data "aws_region" "current" {}
-  locals {
-    efs_dns = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+    prevent_destroy = true
   }
 }
 
-# creating mount target for app-efs
-resource "aws_efs_mount_target" "public-sub-1" {
+# App EFS Mount Targets
+resource "aws_efs_mount_target" "public_sub_1" {
   file_system_id  = aws_efs_file_system.app_file_efs.id
   subnet_id       = aws_subnet.public_subnet_1.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "public-sub-2" {
+
+resource "aws_efs_mount_target" "public_sub_2" {
   file_system_id  = aws_efs_file_system.app_file_efs.id
   subnet_id       = aws_subnet.public_subnet_2.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "public-sub-3" {
+
+resource "aws_efs_mount_target" "public_sub_3" {
   file_system_id  = aws_efs_file_system.app_file_efs.id
   subnet_id       = aws_subnet.public_subnet_3.id
   security_groups = [aws_security_group.custom_sg.id]
 }
 
-# efs for database file
+# DB EFS
 resource "aws_efs_file_system" "db_file_efs" {
   creation_token = "db-data-efs"
-  encrypted = true
-  tag = {
-    name = db-file
+  encrypted      = true
+
+  tags = {
+    Name = "db-file"
   }
+
   lifecycle {
-    prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
-  }
-  # print dns name of efs
-  data "aws_region" "current" {}
-  locals {
-    efs_dns = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+    prevent_destroy = true
   }
 }
 
-# creating mount target for db-efs
-resource "aws_efs_mount_target" "private-sub-1" {
+# DB EFS Mount Targets
+resource "aws_efs_mount_target" "private_sub_1" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
   subnet_id       = aws_subnet.private_subnet_1.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "private-sub-2" {
+
+resource "aws_efs_mount_target" "private_sub_2" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
   subnet_id       = aws_subnet.private_subnet_2.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "private-sub-3" {
+
+resource "aws_efs_mount_target" "private_sub_3" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
   subnet_id       = aws_subnet.private_subnet_3.id
   security_groups = [aws_security_group.custom_sg.id]
 }
 
-# database backup efs
+# Backup DB EFS
 resource "aws_efs_file_system" "backup_db_efs" {
   creation_token = "backup-db-efs"
-  encrypted = true
-  tag = {
-    name = backup-db
+  encrypted      = true
+
+  tags = {
+    Name = "backup-db"
   }
+
   lifecycle {
-    prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
-  }
-  # print dns name of efs
-  data "aws_region" "current" {}
-  locals {
-    efs_dns = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+    prevent_destroy = true
   }
 }
 
