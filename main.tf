@@ -192,13 +192,6 @@ resource "aws_launch_template" "deployment_template" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
-  #block_device_mappings {
-   # device_name = "/dev/sda1" # Or the appropriate device name for your AMI
-    #ebs {
-     # volume_size           = var.volume_size
-      #delete_on_termination = true
-    #}
-  #}
 }
 
 # creating application load balancer
