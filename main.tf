@@ -192,6 +192,9 @@ resource "aws_launch_template" "deployment_template" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
+  user_data = base64encode(templatefile("${path.module}/app-file.sh", {
+    efs_dns = local.efs_dns
+  }))
 }
 
 # creating application load balancer
