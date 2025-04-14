@@ -73,8 +73,13 @@ output "database_instance_id" {
   description = "ID of the database instance"
 }
 
-output "efs_file_system_id" {
-  value = aws_efs_file_system.app_file.id
+output "app_efs_file_system_id" {
+  value = aws_efs_file_system.app_efs_dns.id
+  description = "ID of the EFS file system"
+}
+
+output "dbbackup_efs_file_system_id" {
+  value = aws_efs_file_system.dbbackup_efs_dns.id
   description = "ID of the EFS file system"
 }
 
