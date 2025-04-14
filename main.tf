@@ -281,7 +281,7 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
     create_before_destroy = true #
   } #
   instance_refresh { #
-    startegy = "Rolling" #
+    strategy = "Rolling" #
     preferences { #
       min_healthy_percentage = 90 #
       instance_warmup = 300 #
