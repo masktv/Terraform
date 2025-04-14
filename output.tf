@@ -79,7 +79,7 @@ output "app_efs_file_system_id" {
 }
 
 output "dbbackup_efs_file_system_id" {
-  value = aws_efs_file_system.dbbackup_efs_dns.id
+  value = aws_efs_file_system.backup_db_efs.id
   description = "ID of the EFS file system"
 }
 
