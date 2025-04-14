@@ -314,9 +314,9 @@ resource "aws_instance" "database_instance" {
   user_data = base64encode(<<EOF
 #!/bin/bash
 apt-get update -y
-apt-get install -y amazon-efs-utils
+apt install -y nfs-common
 mkdir -p /mnt/dbbackup
-echo "${local.db_backup_efs_dns}:/ /mnt/dbbackup efs defaults,_netdev 0 0" >> /etc/fstab
+echo "${local.db_backup_efs_dns}:/ /mnt/dbbackup nfs4 defaults,_netdev 0 0" >> /etc/fstab
 mount -a
 EOF
   )
