@@ -324,6 +324,11 @@ resource "aws_efs_file_system" "app_file_efs" {
   lifecycle {
     prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
   }
+  # print dns name of efs
+  data "aws_region" "current" {}
+  locals {
+    efs_dns = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  }
 }
 
 # creating mount target for app-efs
@@ -353,6 +358,11 @@ resource "aws_efs_file_system" "db_file_efs" {
   lifecycle {
     prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
   }
+  # print dns name of efs
+  data "aws_region" "current" {}
+  locals {
+    efs_dns = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  }
 }
 
 # creating mount target for db-efs
@@ -381,6 +391,11 @@ resource "aws_efs_file_system" "backup_db_efs" {
   }
   lifecycle {
     prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
+  }
+  # print dns name of efs
+  data "aws_region" "current" {}
+  locals {
+    efs_dns = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
   }
 }
 
