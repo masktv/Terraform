@@ -311,6 +311,15 @@ resource "aws_instance" "database_instance" {
     delete_on_termination = false
     volume_size           = var.volume_size_db
   }
+  user_data = base64encode(<<EOF
+#!/bin/bash
+apt-get update -y
+apt-get install -y amazon-efs-utils
+mkdir -p /mnt/dbbackup
+echo "${local.db_backup_efs_dns}:/ /mnt/dbbackup efs defaults,_netdev 0 0" >> /etc/fstab
+mount -a
+EOF
+  )
 
   tags = {
     Name = "database-server"
