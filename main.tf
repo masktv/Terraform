@@ -286,7 +286,6 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
       min_healthy_percentage = 90 #
       instance_warmup = 300 #
     } #
-    triggers = ["launch_template"] #
   } #
 }
 
