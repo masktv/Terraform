@@ -321,15 +321,6 @@ resource "aws_instance" "database_instance" {
   }
 }
 
-# Creating EFS
-resource "aws_efs_file_system" "app_file" {
-  creation_token = "app-file"
-  tags = {
-    Name        = "app-file"
-    description = "application file persistency"
-  }
-}
-
 # cretaing CDN Distribution
 resource "aws_cloudfront_distribution" "cdn" {
   enabled = true
