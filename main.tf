@@ -263,22 +263,22 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
   ]
   target_group_arns = [aws_lb_target_group.target_group.arn]
   health_check_type    = "ELB"  #
-  health_check_grace_period = 60 #
-  termination_policies = ["OldestInstance"] #
+  health_check_grace_period = 60 
+  termination_policies = ["OldestInstance"] 
   capacity_rebalance = true #
   launch_template {
     id      = aws_launch_template.deployment_template.id
     version = "$Latest"
   }
   lifecycle {  #
-    create_before_destroy = true #
-  } #
-  instance_refresh { #
-    strategy = "Rolling" #
-    preferences { #
-      min_healthy_percentage = 90 #
-      instance_warmup = 300 #
-    } #
+    create_before_destroy = true 
+  } 
+  instance_refresh { 
+    strategy = "Rolling" 
+    preferences { 
+      min_healthy_percentage = 90 
+      instance_warmup = 300 
+    } 
   } #
 }
 
