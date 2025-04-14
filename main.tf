@@ -356,18 +356,47 @@ resource "aws_efs_file_system" "db_file_efs" {
 }
 
 # creating mount target for db-efs
-resource "aws_efs_mount_target" "public-sub-1" {
+resource "aws_efs_mount_target" "private-sub-1" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
   subnet_id       = aws_subnet.private_subnet_1.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "public-sub-2" {
+resource "aws_efs_mount_target" "private-sub-2" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
   subnet_id       = aws_subnet.private_subnet_2.id
   security_groups = [aws_security_group.custom_sg.id]
 }
-resource "aws_efs_mount_target" "public-sub-3" {
+resource "aws_efs_mount_target" "private-sub-3" {
   file_system_id  = aws_efs_file_system.db_file_efs.id
+  subnet_id       = aws_subnet.private_subnet_3.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+
+# database backup efs
+resource "aws_efs_file_system" "backup_db_efs" {
+  creation_token = "backup-db-efs"
+  encrypted = true
+  tag = {
+    name = backup-db
+  }
+  lifecycle {
+    prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
+  }
+}
+
+# creating mount target for db-efs
+resource "aws_efs_mount_target" "private-sub-1" {
+  file_system_id  = aws_efs_file_system.backup_db_efs.id
+  subnet_id       = aws_subnet.private_subnet_1.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+resource "aws_efs_mount_target" "private-sub-2" {
+  file_system_id  = aws_efs_file_system.backup_db_efs.id
+  subnet_id       = aws_subnet.private_subnet_2.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+resource "aws_efs_mount_target" "private-sub-3" {
+  file_system_id  = aws_efs_file_system.backup_db_efs.id
   subnet_id       = aws_subnet.private_subnet_3.id
   security_groups = [aws_security_group.custom_sg.id]
 }
