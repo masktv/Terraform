@@ -314,6 +314,35 @@ resource "aws_instance" "database_instance" {
   }
 }
 
+# efs for application file
+resource "aws_efs_file_system" "app_file_efs" {
+  creation_token = "app-data-efs"
+  encrypted = true
+  tag = {
+    name = app-file
+  }
+  lifecycle {
+    prevent_destroy = true  #  EFS won't be destroyed with `terraform destroy`
+  }
+}
+
+# creating mount target for app-efs
+resource "aws_efs_mount_target" "public-sub-1" {
+  file_system_id  = aws_efs_file_system.app_file_efs.id
+  subnet_id       = aws_subnet.public_subnet_1.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+resource "aws_efs_mount_target" "public-sub-2" {
+  file_system_id  = aws_efs_file_system.app_file_efs.id
+  subnet_id       = aws_subnet.public_subnet_2.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+resource "aws_efs_mount_target" "public-sub-3" {
+  file_system_id  = aws_efs_file_system.app_file_efs.id
+  subnet_id       = aws_subnet.public_subnet_3.id
+  security_groups = [aws_security_group.custom_sg.id]
+}
+
 # cretaing CDN Distribution
 resource "aws_cloudfront_distribution" "cdn" {
   enabled = true
