@@ -193,7 +193,7 @@ resource "aws_launch_template" "deployment_template" {
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
   user_data = base64encode(templatefile("${path.module}/app-file.sh", {
-    efs_dns = local.efs_dns
+    efs_dns = local.app_efs_dns
   }))
 }
 
@@ -332,7 +332,7 @@ data "aws_region" "current" {}
 locals {
   app_efs_dns     = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
   db_efs_dns      = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
-  backup_efs_dns  = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  db_backup_efs_dns  = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
 }
 
 # App EFS
