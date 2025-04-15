@@ -5,7 +5,7 @@ variable "region" {
 }
 
 variable "remote_backend_bucket" {
-  type =  string
+  type    =  string
   default = "spain-infra.tfstate"
 }
 
