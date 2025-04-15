@@ -1,9 +1,9 @@
 # manage backend on s3 bucket
 terraform {
   backend "s3" {
-    bucket = var.remote_backend_bucket
-    key    = var.key
-    region = var.region
+    bucket = "spain-infra.tfstate"
+    key    = 
+    region = ap-southeast-1
   }
 }
 
