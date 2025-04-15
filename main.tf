@@ -2,8 +2,8 @@
 terraform {
   backend "s3" {
     bucket = "spain-infra.tfstate"
-    key    = 
-    region = ap-southeast-1
+    key    = "terraform-backend/terraform.tfstate"
+    region = "ap-southeast-1"
   }
 }
 
