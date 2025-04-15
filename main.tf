@@ -314,9 +314,10 @@ resource "aws_instance" "database_instance" {
   user_data = base64encode(<<EOF
 #!/bin/bash
 apt-get update -y
-apt install nfs-common
+apt install nfs-common -y
 mkdir -p /mnt/dbbackup
 echo "${local.db_backup_efs_dns}:/ /mnt/dbbackup nfs4 defaults,_netdev 0 0" >> /etc/fstab
+systemctl daemon-reload
 mount -a
 EOF
   )
