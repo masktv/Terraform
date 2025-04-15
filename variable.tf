@@ -51,7 +51,7 @@ variable "priv_sub_cidr_c" {
 # deployment template image_id
 variable "image_id" {
   type    = string
-  default = "ami-0c116b87c68678dd7"
+  default = "ami-0f458abd9c6cc8249"
 }
 
 variable "instance_type" {
@@ -76,7 +76,7 @@ variable "certificate_arn_cdn" {
 
 variable "database_ami" {
   type    = string
-  default = "ami-01938df366ac2d954"
+  default = "ami-0316c6c42b1288dcb"
 }
 
 variable "instance_type_db" {
