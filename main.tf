@@ -1,7 +1,7 @@
 # manage backend on s3 bucket
 terraform {
   backend "s3" {
-    bucket = "mybucket"
+    bucket = var.remote_backend_bucket
     key    = "path/to/my/key"
     region = "us-east-1"
   }
