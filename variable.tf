@@ -4,6 +4,11 @@ variable "region" {
   default     = "ap-southeast-1"
 }
 
+variable "remote_backend_bucket" {
+  type =  string
+  default = "spain-infra.tfstate"
+}
+
 variable "vpc_cidr_block" {
   type    = string
   default = "172.16.0.0/16"
