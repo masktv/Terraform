@@ -73,7 +73,7 @@ resource "aws_subnet" "private_subnet_3" {
 # creating internet gateway
 resource "aws_internet_gateway" "custom_igw" {
   vpc_id = aws_vpc.custom_vpc.id
-  tags = {
+  tags   = {
     Name = "custom-igw"
   }
 }
@@ -81,7 +81,7 @@ resource "aws_internet_gateway" "custom_igw" {
 # creating route table for igw
 resource "aws_route_table" "custom_igw_route_table" {
   vpc_id = aws_vpc.custom_vpc.id
-  tags = {
+  tags   = {
     Name = "custom-igw-route-table"
   }
 }
@@ -123,7 +123,7 @@ resource "aws_nat_gateway" "custom_nat" {
 # creating route table for nat gateway
 resource "aws_route_table" "custom_nat_route_table" {
   vpc_id = aws_vpc.custom_vpc.id
-  tags = {
+  tags   = {
     Name = "custom-nat-route-table"
   }
 }
@@ -181,7 +181,7 @@ resource "aws_security_group" "custom_sg" {
 
 # creating key pair
 resource "aws_key_pair" "spain_deployment_key_pair" {
-  key_name = "spain-deployment-key"
+  key_name   = "spain-deployment-key"
   public_key = file("~/.ssh/spain-deployment-key.pub")
 }
 
@@ -264,11 +264,11 @@ resource "aws_autoscaling_group" "deployment_scaling_group" {
     aws_subnet.public_subnet_2.id,
     aws_subnet.public_subnet_3.id,
   ]
-  target_group_arns = [aws_lb_target_group.target_group.arn]
+  target_group_arns    = [aws_lb_target_group.target_group.arn]
   health_check_type    = "ELB"  #
   health_check_grace_period = 60 
   termination_policies = ["OldestInstance"] 
-  capacity_rebalance = true #
+  capacity_rebalance   = true #
   launch_template {
     id      = aws_launch_template.deployment_template.id
     version = "$Latest"
@@ -330,8 +330,8 @@ data "aws_region" "current" {}
 
 # Local values for EFS DNS names
 locals {
-  app_efs_dns     = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
-  db_efs_dns      = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  app_efs_dns        = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  db_efs_dns         = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
   db_backup_efs_dns  = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
 }
 
