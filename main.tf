@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     bucket = var.remote_backend_bucket
-    key    = "path/to/my/key"
+    key    = var.key
     region = var.region
   }
 }
