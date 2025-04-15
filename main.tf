@@ -318,6 +318,7 @@ apt install nfs-common -y
 mkdir -p /mnt/dbbackup
 echo "${local.db_backup_efs_dns}:/ /mnt/dbbackup nfs4 defaults,_netdev 0 0" >> /etc/fstab
 systemctl daemon-reload
+sleep 60
 mount -a
 EOF
   )
