@@ -313,7 +313,7 @@ resource "aws_autoscaling_policy" "scaling_up" {
 resource "aws_instance" "database_instance" {
   ami           = var.database_ami
   instance_type = var.instance_type_db
-  # private_ip    = "10.0.2.50"  # --> give static priv ip for db server
+  private_ip    = "172.16.101.118"  # --> give static priv ip for db server
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id] # Consider a dedicated SG
   subnet_id     = aws_subnet.private_subnet_1.id # Choose one private subnet
