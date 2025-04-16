@@ -318,7 +318,8 @@ resource "aws_instance" "database_instance" {
   key_name      = aws_key_pair.spain_deployment_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.custom_sg.id] # Consider a dedicated SG
   subnet_id     = aws_subnet.private_subnet_1.id # Choose one private subnet
-
+  disable_api_stop        = true
+  disable_api_termination = true
   root_block_device {
     delete_on_termination = false
     volume_size           = var.volume_size_db
