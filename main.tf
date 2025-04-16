@@ -397,19 +397,19 @@ resource "aws_efs_file_system" "app_log_efs" {
 }
 
 # LOG EFS Mount Targets
-resource "aws_efs_mount_target" "public_sub_1" {
+resource "aws_efs_mount_target" "log_public_sub_1" {
   file_system_id  = aws_efs_file_system.app_log_efs.id
   subnet_id       = aws_subnet.public_subnet_1.id
   security_groups = [aws_security_group.custom_sg.id]
 }
 
-resource "aws_efs_mount_target" "public_sub_2" {
+resource "aws_efs_mount_target" "log_public_sub_2" {
   file_system_id  = aws_efs_file_system.app_log_efs.id
   subnet_id       = aws_subnet.public_subnet_2.id
   security_groups = [aws_security_group.custom_sg.id]
 }
 
-resource "aws_efs_mount_target" "public_sub_3" {
+resource "aws_efs_mount_target" "log_public_sub_3" {
   file_system_id  = aws_efs_file_system.app_log_efs.id
   subnet_id       = aws_subnet.public_subnet_3.id
   security_groups = [aws_security_group.custom_sg.id]
