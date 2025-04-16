@@ -15,4 +15,4 @@ systemctl daemon-reload
 sleep 60
 # Mount all filesystems
 mount -a
-log_dns
+
