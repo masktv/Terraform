@@ -13,3 +13,9 @@ Db Server AMI  -->
 3.  cronjob
 4.  mysql bind add
 5.  install nfs common for efs
+
+Remote backend  -->
+1.  make bucket
+2.  make folder in bucket
+3.  set bucket pollicy with user that configured for perform terraform task
+ 
