@@ -16,3 +16,5 @@ sleep 60
 # Mount all filesystems
 mount -a
 
+# this reload appache to use efs to store logs file
+systemctl restart apache2
