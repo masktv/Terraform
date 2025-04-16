@@ -18,4 +18,3 @@ Remote backend  -->
 1.  make bucket
 2.  make folder in bucket
 3.  set bucket pollicy with user that configured for perform terraform task
- 
