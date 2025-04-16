@@ -344,7 +344,7 @@ data "aws_region" "current" {}
 # Local values for EFS DNS names
 locals {
   app_efs_dns        = "${aws_efs_file_system.app_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
-  db_efs_dns         = "${aws_efs_file_system.db_file_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
+  app_log_efs_dns    = "${aws_efs_file_system.app_log_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
   db_backup_efs_dns  = "${aws_efs_file_system.backup_db_efs.id}.efs.${data.aws_region.current.name}.amazonaws.com"
 }
 
