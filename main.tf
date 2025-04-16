@@ -204,6 +204,7 @@ resource "aws_launch_template" "deployment_template" {
   vpc_security_group_ids = [aws_security_group.custom_sg.id]
   user_data = base64encode(templatefile("${path.module}/app-file.sh", {
     efs_dns = local.app_efs_dns
+    log_dns = local.app_log_efs_dns
   }))
 }
 
