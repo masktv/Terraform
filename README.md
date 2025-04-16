@@ -1,6 +1,7 @@
 Deployment AWS Infrastructure through Terraform
 1. Configure User to Perform terraform Task and manage tfstate on remote backendd --> s3
 2. Install Terraform
+3. create ssh key 
 
 Web Server AMI -->   root volume size 50 gb
 1. apache2 php nd requied dependencies install
